@@ -1,0 +1,59 @@
+{
+  "name": "gatsby-hygraph-mantine",
+  "description": "Gatsby Hygraph Mantine",
+  "version": "1.0.0",
+  "author": "Kerstin Huppenbauer <k.huppenbauer@web.de>",
+  "license": "MIT",
+  "keywords": [
+    "gatsby",
+    "graphcms",
+    "hygraph",
+    "mantine"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/khuppenbauer/gatsby-hygraph-mantine.git"
+  },
+  "scripts": {
+    "build": "gatsby clean && gatsby build",
+    "develop": "gatsby develop",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "start": "gatsby develop",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean",
+    "lint": "eslint --ext .ts,.tsx . src/",
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.4",
+    "@mantine/core": "^5.4.2",
+    "@mantine/form": "^5.4.2",
+    "@mantine/hooks": "^5.4.2",
+    "gatsby": "^4.24.1",
+    "gatsby-plugin-image": "^2.23.1",
+    "gatsby-plugin-mantine": "^5.0.0",
+    "gatsby-plugin-sharp": "^4.23.1",
+    "gatsby-source-graphcms": "^2.8.0",
+    "gatsby-transformer-sharp": "^4.23.1",
+    "graphql": "^15.6.1",
+    "graphql-request": "^3.4.0",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "react-helmet": "^6.1.0",
+    "typescript": "^4.8.4"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.38.1",
+    "@typescript-eslint/parser": "^5.38.1",
+    "eslint": "^8.24.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-config-mantine": "^2.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.6.1",
+    "eslint-plugin-react": "^7.31.8",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "gatsby-plugin-eslint": "^4.0.2",
+    "prettier": "^2.7.1"
+  }
+}
