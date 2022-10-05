@@ -5,6 +5,8 @@ interface ContainerProps {
   children: React.ReactNode;
 }
 
-const ContainerComponent = ({ children }: ContainerProps) => <Container>{children}</Container>;
+const ContainerComponent = ({ children }: ContainerProps) => (
+  <Container my={20}>{children}</Container>
+);
 
 export default ContainerComponent;
