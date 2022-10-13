@@ -7,9 +7,13 @@ import PageFooter from '../components/Page/Footer';
 import PageHeader from '../components/Page/Header';
 import Container from '../components/Container/Container';
 import Header from '../components/Content/Header/Header';
+import Form from '../components/Content/Form/Form';
 
+const components = {
+  Form,
+};
 function GraphCmsPage({ data: { page } }) {
-  const { title, headline, description, seo } = page;
+  const { title, headline, slug, description, seo, blocks } = page;
   return (
     <Layout>
       <Seo title={title} seo={seo} />
@@ -17,6 +21,14 @@ function GraphCmsPage({ data: { page } }) {
       <main>
         <Container>
           <Header headline={headline} description={description} />
+          {blocks.map((block) => {
+            const { id, remoteTypeName } = block;
+            if (!components[remoteTypeName]) {
+              return null;
+            }
+            const BlockComponent = components[remoteTypeName];
+            return <BlockComponent key={id} block={block} title={title} slug={slug} />;
+          })}
         </Container>
       </main>
       <PageFooter />
@@ -29,6 +41,7 @@ export const pageQuery = graphql`
     page: graphCmsPage(slug: { eq: $slug }) {
       title
       headline
+      slug
       description {
         html
       }
@@ -40,6 +53,27 @@ export const pageQuery = graphql`
           handle
         }
         noIndex
+      }
+      blocks {
+        ... on GraphCMS_Form {
+          id
+          remoteTypeName
+          formFields {
+            ... on GraphCMS_FormField {
+              id
+              formFieldLabel
+              formFieldMandatory
+              formFieldName
+              formFieldPlaceholder
+              formFieldType
+            }
+          }
+          formName
+          formSubmit
+          formSuccess {
+            markdown
+          }
+        }
       }
     }
   }
