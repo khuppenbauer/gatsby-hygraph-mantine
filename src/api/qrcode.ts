@@ -9,6 +9,7 @@ const {
   updateAsset,
   publishAsset,
   deactivateAsset,
+  deleteAsset,
   connectQrCode,
   publishPage,
 } = require('../libs/hygraph/mutation');
@@ -164,6 +165,14 @@ const publishHygraphAsset = async (asset: string) => {
   return hygraph.request(mutation, mutationVariables);
 };
 
+const deleteHygraphAsset = async (asset: string) => {
+  const mutation = await deleteAsset();
+  const mutationVariables = {
+    id: asset,
+  };
+  return hygraph.request(mutation, mutationVariables);
+};
+
 const deactivateHygraphAsset = async (asset: string) => {
   const mutation = await deactivateAsset();
   const mutationVariables = {
@@ -249,7 +258,12 @@ export default async function handler(req: Request, res: any) {
   const url = `https://${host}/${slug}`;
   const fileName = `/tmp/${shortCode}-${width}.png`;
   await createQrCode(fileName, url, width, lightColor, darkColor);
-  const asset = await uploadAsset(fileName);
+  let asset = await uploadAsset(fileName);
+  console.log(asset);
+  if (asset.width === 0) {
+    await deleteHygraphAsset(asset.id);
+    asset = await uploadAsset(fileName);
+  }
   const { id: assetId } = asset;
   await updateHygraphAsset(assetId, lightColor, darkColor, sha1);
   await publishHygraphAsset(assetId);

@@ -36,6 +36,15 @@ export const deactivateAsset = async () =>
     }
   `;
 
+export const deleteAsset = async () =>
+  gql`
+    mutation DeleteAsset($id: ID!) {
+      deleteAsset(where: { id: $id }) {
+        id
+      }
+    }
+  `;
+
 export const connectQrCode = async () =>
   gql`
     mutation ConnectQrCode(
