@@ -1,22 +1,46 @@
 import React from 'react';
-import { TextInput, TextInputProps } from '@mantine/core';
-import { useField } from 'formik';
+import { TextInput } from '@mantine/core';
+
+interface TextInputProps {
+  name: string,
+  label: React.ReactNode,
+  type: string,
+  placeholder: string,
+  withAsterisk: boolean,
+  register: any,
+  error?: {
+    type: string,
+    message: string,
+  },
+}
 
 function TextInputComponent({
   name,
-  onChange,
-  ...rest
-}: { name: string } & Omit<TextInputProps, 'value' | 'error'>) {
-  const [{ value }, { touched, error }, { setValue }] = useField(name);
-  const errorMessage = touched && error ? error : '';
+  label,
+  type,
+  placeholder,
+  withAsterisk,
+  register,
+  error,
+}: TextInputProps) {
+  const errorMessage = error ? ' ' : '';
+  const options = { required: false, pattern: { value: null } };
+  if (withAsterisk) {
+    options.required = true;
+  }
+  if (type === 'Email') {
+    options.pattern = {
+      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+    };
+  }
   return (
     <TextInput
-      {...rest}
+      label={label}
+      placeholder={placeholder}
+      withAsterisk={withAsterisk}
       error={errorMessage}
-      value={value}
-      onChange={(v) => {
-        setValue(v.target.value);
-      }}
+      {...register(name, options)}
+      pb="xs"
     />
   );
 }

@@ -1,45 +1,49 @@
 import React from 'react';
-import { Checkbox } from '@mantine/core';
+import { Select } from '@mantine/core';
 
-interface CheckboxProps {
+interface SelectProps {
   name: string,
   label: React.ReactNode,
+  placeholder: string,
   withAsterisk: boolean,
+  data: string[],
   register: any,
   error?: {
     type: string,
     message: string,
   },
+  setValue: any,
 }
 
-function CheckboxComponent({
+function SelectComponent({
   name,
   label,
+  placeholder,
   withAsterisk,
-  register,
+  data,
   error,
-}: CheckboxProps) {
+  register,
+  setValue,
+}: SelectProps) {
   const errorMessage = error ? ' ' : '';
   const options = { required: false };
-  let text = label;
   if (withAsterisk) {
     options.required = true;
-    text = (
-      <>
-        {label}
-        {' '}
-        <span style={{ color: 'red' }}>*</span>
-      </>
-    );
   }
   return (
-    <Checkbox
-      label={text}
+    <Select
+      label={label}
+      placeholder={placeholder}
+      data={data}
+      withAsterisk={withAsterisk}
       error={errorMessage}
       {...register(name, options)}
+      onChange={(event) => {
+        setValue(name, event);
+      }}
       pb="xs"
     />
   );
 }
 
-export default CheckboxComponent;
+export default SelectComponent;
