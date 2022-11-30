@@ -100,7 +100,7 @@ function FormComponent({ block, slug }) {
                     label={formFieldLabel}
                     placeholder={formFieldPlaceholder}
                     withAsterisk={formFieldMandatory}
-                    data={formFieldSelect}
+                    data={JSON.parse(formFieldSelect)}
                     error={errors[formFieldName]}
                     register={register}
                     setValue={setValue}
