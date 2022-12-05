@@ -25,7 +25,7 @@
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "dependencies": {
-    "@emotion/react": "^11.10.4",
+    "@emotion/react": "^11.10.5",
     "@mantine/core": "^5.4.2",
     "@mantine/hooks": "^5.4.2",
     "axios": "^0.27.2",
@@ -44,23 +44,23 @@
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-helmet": "^6.1.0",
-    "react-hook-form": "^7.38.0",
+    "react-hook-form": "^7.40.0",
     "react-inlinesvg": "^3.0.1",
-    "react-markdown": "^8.0.3",
-    "typescript": "^4.8.4"
+    "react-markdown": "^8.0.4",
+    "typescript": "^4.9.3"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.38.1",
-    "@typescript-eslint/parser": "^5.38.1",
-    "eslint": "^8.24.0",
+    "@typescript-eslint/eslint-plugin": "^5.45.1",
+    "@typescript-eslint/parser": "^5.45.1",
+    "eslint": "^8.29.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-config-mantine": "^2.0.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.6.1",
-    "eslint-plugin-react": "^7.31.8",
+    "eslint-plugin-react": "^7.31.11",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "gatsby-plugin-eslint": "^4.0.2",
-    "prettier": "^2.7.1"
+    "gatsby-plugin-eslint": "^4.0.3",
+    "prettier": "^2.8.0"
   }
 }
