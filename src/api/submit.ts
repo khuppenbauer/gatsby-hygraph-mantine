@@ -15,6 +15,7 @@ interface Request {
   body: {
     data: DataProps;
   };
+  method: string;
 }
 
 interface DataProps {
@@ -38,8 +39,13 @@ const createSubmission = async (data: any) => {
 };
 
 export default async function handler(req: Request, res: any) {
-  const { body } = req;
-  await createSubmission(body);
+  const { method, body } = req;
+  if (method === 'POST') {
+    await createSubmission(body);
+  }
+  res.setHeader("Access-Control-Allow-Origin", ["*"]);
+  res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   res.status(200).json({
     message: 'Ok',
   });
