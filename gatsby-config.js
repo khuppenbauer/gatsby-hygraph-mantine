@@ -9,6 +9,7 @@ module.exports = {
         token: process.env.HYGRAPH_API_TOKEN,
         locales: ['de', 'en'],
         stages: ['PUBLISHED'],
+        queryConcurrency: 5,
       },
     },
     'gatsby-plugin-image',
