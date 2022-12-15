@@ -20,6 +20,7 @@
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "start": "gatsby develop",
     "serve": "gatsby serve",
+    "deploy": "gatsby clean && gatsby build && gatsby serve -H 0.0.0.0 -p 3000",
     "clean": "gatsby clean",
     "lint": "eslint --ext .ts,.tsx . src/",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
