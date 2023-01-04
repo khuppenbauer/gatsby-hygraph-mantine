@@ -2,6 +2,7 @@ import React from 'react';
 import { graphql } from 'gatsby';
 
 import Layout from '../components/Layout/Layout';
+import Scripts from '../components/Scripts/Scripts';
 import Seo from '../components/Seo/Seo';
 import PageFooter from '../components/Page/Footer';
 import PageHeader from '../components/Page/Header';
@@ -17,6 +18,7 @@ function GraphCmsPage({ data: { page } }) {
   return (
     <Layout>
       <Seo title={title} seo={seo} />
+      <Scripts />
       <PageHeader />
       <main>
         <Container>
