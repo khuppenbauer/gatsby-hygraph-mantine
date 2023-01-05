@@ -8,6 +8,8 @@ import ButtonComponent from './Button';
 import CheckboxComponent from './Checkbox';
 import SelectComponent from './Select';
 
+const plausible = process.env.GATSBY_PLAUSIBLE_SITE_ID;
+
 function FormComponent({ block, slug }) {
   const { formName, formFields, formSubmit, formSuccess } = block;
   const [data, setData] = useState(null);
@@ -36,6 +38,8 @@ function FormComponent({ block, slug }) {
       console.log(error);
     });
   }
+
+  const className = plausible ? `plausible-event-name=${formName} plausible-event-slug=${slug}` : '';
 
   return (
     <Box sx={{ maxWidth: 300 }} mx="auto">
@@ -111,7 +115,7 @@ function FormComponent({ block, slug }) {
             }
           })}
           <Group position="right" mt="md">
-            <ButtonComponent>{formSubmit}</ButtonComponent>
+            <ButtonComponent className={className}>{formSubmit}</ButtonComponent>
           </Group>
         </form>
       )}
