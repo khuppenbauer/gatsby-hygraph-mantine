@@ -134,9 +134,18 @@ const PageFooter = () => {
                 id
                 title
                 links {
-                  id
-                  label
-                  url
+                  ... on GraphCMS_ExternalLink {
+                    id
+                    label
+                    url
+                  }
+                  ... on GraphCMS_InternalLink {
+                    id
+                    label
+                    page {
+                      slug
+                    }
+                  }
                 }
               }
             }
@@ -161,7 +170,7 @@ const PageFooter = () => {
     return (
       <a href={socialMediaLink} key={socialMediaId} target="_blank" rel="noreferrer">
         <ActionIcon size="lg">
-          <SVG src={svg} width={18} strokeWidth={1.5} height="auto" title={socialMediaIcon} />
+          <SVG src={svg} width={18} strokeWidth={1.5} title={socialMediaIcon} />
         </ActionIcon>
       </a>
     );
@@ -169,25 +178,32 @@ const PageFooter = () => {
 
   let footerLinks;
   if (links && links.length === 1) {
-    const linkItems = links[0].links.map((link) => (
-      <Link to={link.url} key={link.id} className={cx(classes.link)}>
-        {link.label}
-      </Link>
-    ));
+    const linkItems = links[0].links.map((link) => {
+      const { id, label, url, page } = link;
+      const to = url || `/${page.slug}`;
+      return (
+        <Link to={to} key={id} className={cx(classes.link)}>
+          {label}
+        </Link>
+      );
+    });
     footerLinks = <Group className={classes.links}>{linkItems}</Group>;
   }
   if (links && links.length > 1) {
     const linkItems = links.map((linkGroup) => {
-      linkGroup.links.map((link) => (
-        <Link to={link.url} key={link.id} className={cx(classes.link)}>
-          {link.label}
-        </Link>
-      ));
-
+      const linkGroupItems = linkGroup.links.map((link) => {
+        const { id, label, url, page } = link;
+        const to = url || `/${page.slug}`;
+        return (
+          <Link to={to} key={id} className={cx(classes.link)}>
+            {label}
+          </Link>
+        );
+      });
       return (
         <div className={classes.wrapper} key={linkGroup.id}>
           <Text className={classes.title}>{linkGroup.title}</Text>
-          {links}
+          {linkGroupItems}
         </div>
       );
     });

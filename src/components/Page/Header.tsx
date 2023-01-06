@@ -94,10 +94,19 @@ const PageHeader = () => {
         settings: allGraphCmsSetting {
           nodes {
             header {
-              links {
-                id
-                label
-                url
+              mainMenu {
+                ... on GraphCMS_ExternalLink {
+                  id
+                  label
+                  url
+                }
+                ... on GraphCMS_InternalLink {
+                  id
+                  label
+                  page {
+                    slug
+                  }
+                }
               }
               logo {
                 handle
@@ -115,20 +124,24 @@ const PageHeader = () => {
   if (!header) {
     return null;
   }
-  const { links, logo } = header;
+  const { mainMenu, logo } = header;
   const [opened, { toggle }] = useDisclosure(false);
   const { classes, cx } = useStyles();
-  const items = links.map((link) => (
-    <Link
-      to={link.url}
-      key={link.id}
-      className={cx(classes.link)}
-      activeClassName={cx(classes.linkActive)}
-      partiallyActive
-    >
-      {link.label}
-    </Link>
-  ));
+  const items = mainMenu.map((link) => {
+    const { id, label, url, page } = link;
+    const to = url || `/${page.slug}`;
+    return (
+      <Link
+        to={to}
+        key={id}
+        className={cx(classes.link)}
+        activeClassName={cx(classes.linkActive)}
+        partiallyActive
+      >
+        {label}
+      </Link>
+    )
+  });
 
   return (
     <Header height={HEADER_HEIGHT} className={classes.root}>
