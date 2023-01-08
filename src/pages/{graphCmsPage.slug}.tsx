@@ -59,6 +59,7 @@ export const pageQuery = graphql`
       blocks {
         ... on GraphCMS_Form {
           id
+          remoteId
           remoteTypeName
           formFields {
             ... on GraphCMS_FormField {
@@ -75,6 +76,9 @@ export const pageQuery = graphql`
           formSubmit
           formSuccess {
             markdown
+          }
+          formRedirect {
+            slug
           }
         }
       }

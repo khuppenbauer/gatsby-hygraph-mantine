@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { navigate } from 'gatsby';
 import ReactMarkdown from 'react-markdown';
 import { Group, Box } from '@mantine/core';
 import { useForm } from 'react-hook-form';
@@ -11,7 +12,7 @@ import SelectComponent from './Select';
 const plausible = process.env.GATSBY_PLAUSIBLE_SITE_ID;
 
 function FormComponent({ block, slug }) {
-  const { formName, formFields, formSubmit, formSuccess } = block;
+  const { remoteId, formName, formFields, formSubmit, formSuccess, formRedirect } = block;
   const [data, setData] = useState(null);
   const {
     handleSubmit,
@@ -28,11 +29,14 @@ function FormComponent({ block, slug }) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ formName, slug, ...values }),
+      body: JSON.stringify({ formId: remoteId, formName, slug, ...values }),
     })
     .then(() => {
       setData(values);
       reset();
+      if (formRedirect && formRedirect.slug) {
+        navigate(`/${formRedirect.slug}`)
+      }
     })
     .catch((error) => {
       console.log(error);
