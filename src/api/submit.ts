@@ -1,16 +1,24 @@
 const { GraphQLClient } = require('graphql-request');
 const axios = require('axios');
 const crypto = require('crypto');
+const nodemailer = require("nodemailer");
 
 const { connectFormSubmission } = require('../libs/hygraph/mutation');
 const { getForm } = require('../libs/hygraph/query');
 
 const hygraphUrl = process.env.HYGRAPH_API_URL;
 const hygraphToken = process.env.HYGRAPH_API_TOKEN;
+const mailTransport = process.env.MAIL_TRANSPORT;
 const mailjetPublic = process.env.MAILJET_PUBLIC;
 const mailjetPrivate = process.env.MAILJET_PRIVATE;
 const mailjetUrl = process.env.MAILJET_URL;
 const mailjetEmailFrom = process.env.MAILJET_EMAIL_FROM;
+const smtpHost = process.env.MAIL_SMTP_HOST;
+const smtpPort = process.env.MAIL_SMTP_PORT;
+const smtpSecure = process.env.MAIL_SMTP_SECURE;
+const smtpUser = process.env.MAIL_SMTP_USER;
+const smtpPass = process.env.MAIL_SMTP_PASS;
+
 
 const hygraph = new GraphQLClient(hygraphUrl, {
   headers: {
@@ -29,11 +37,7 @@ interface DataProps {
   formName: string;
 }
 
-const sendMail = async (to: string, data: any) => {
-  const content = [];
-  Object.entries(data).forEach(([key, value]) => {
-    content.push(`${key}: ${value}`);
-  });
+const sendMailjetMail = async (to: string, data: any, content: any) => {
   const message = {
     From: {
       Email: mailjetEmailFrom,
@@ -54,6 +58,37 @@ const sendMail = async (to: string, data: any) => {
     },
     data: JSON.stringify({ Messages: [message] }),
   });
+}
+
+const sendSmtpMail = async (to: string, data: any, content: any) => {
+  const transporter = nodemailer.createTransport({
+    host: smtpHost,
+    port: smtpPort,
+    secure: smtpSecure,
+    auth: {
+      user: smtpUser,
+      pass: smtpPass,
+    },
+  });
+  await transporter.sendMail({
+    from: smtpUser,
+    to,
+    subject: data.formName,
+    text: content.join('\n'),
+    html: content.join('<br />'),
+  });
+}
+
+const sendMail = async (to: string, data: any) => {
+  const content = [];
+  Object.entries(data).forEach(([key, value]) => {
+    content.push(`${key}: ${value}`);
+  });
+  if (mailTransport === 'smtp') {
+    await sendSmtpMail(to, data, content);
+  } else {
+    await sendMailjetMail(to, data, content);
+  }
 }
 
 const sendWebhook = async (formIntegrationWebhook: string, data: any) => {
