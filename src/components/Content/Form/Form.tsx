@@ -10,6 +10,7 @@ import CheckboxComponent from './Checkbox';
 import SelectComponent from './Select';
 
 const plausible = process.env.GATSBY_PLAUSIBLE_SITE_ID;
+const umami = process.env.GATSBY_UMAMI_SITE_ID;
 
 function FormComponent({ block, slug }) {
   const { remoteId, formName, formFields, formSubmit, formSuccess, formRedirect } = block;
@@ -43,7 +44,14 @@ function FormComponent({ block, slug }) {
     });
   }
 
-  const className = plausible ? `plausible-event-name=${formName} plausible-event-slug=${slug}` : '';
+  const classNames = [];
+  if (plausible) {
+    classNames.push(`plausible-event-name=${formName} plausible-event-slug=${slug}`);
+  }
+  if (umami) {
+    classNames.push(`umami--name--${formName} umami--slug--${slug}`);
+  }
+  const className = classNames.join(' ').trim();
 
   return (
     <Box sx={{ maxWidth: 300 }} mx="auto">
