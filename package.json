@@ -30,7 +30,7 @@
     "@mantine/hooks": "5.4.2",
     "axios": "^1.2.2",
     "crypto": "^1.0.1",
-    "gatsby": "^4.24.1",
+    "gatsby": "^4.25.7",
     "gatsby-plugin-image": "^2.23.1",
     "gatsby-plugin-mantine": "^5.0.0",
     "gatsby-plugin-sharp": "^4.25.1",
