@@ -28,7 +28,7 @@
     "@emotion/react": "^11.10.5",
     "@mantine/core": "5.4.2",
     "@mantine/hooks": "5.4.2",
-    "axios": "^1.2.2",
+    "axios": "^1.6.0",
     "crypto": "^1.0.1",
     "gatsby": "^4.25.7",
     "gatsby-plugin-image": "^2.23.1",
